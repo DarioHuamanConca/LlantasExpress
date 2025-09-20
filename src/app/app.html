@@ -1,0 +1,47 @@
+<app-loading-screen 
+  *ngIf="isLoading" 
+  (loadingComplete)="onLoadingComplete()">
+</app-loading-screen>
+
+<div class="content-wrapper" [class.hidden]="isLoading">
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <span class="logo-icon">⚙️</span>
+        <span class="logo-text">Llantas Express</span>
+      </div>
+      
+      <nav class="nav" [class.open]="isMenuOpen">
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+        <a routerLink="/products" routerLinkActive="active">Productos</a>
+        <a routerLink="/about" routerLinkActive="active">Nosotros</a>
+      </nav>
+      
+      <button 
+        class="menu-toggle" 
+        [class.open]="isMenuOpen"
+        aria-label="Abrir menú" 
+        (click)="toggleMenu()"
+        aria-expanded="{{isMenuOpen}}">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>© 2025 Llantas Express - Calidad y seguridad en cada kilómetro</p>
+      <div class="social-links">
+        <a href="#" aria-label="Facebook">📱</a>
+        <a href="#" aria-label="Instagram">📸</a>
+        <a href="#" aria-label="WhatsApp">💬</a>
+      </div>
+    </div>
+  </footer>
+</div>

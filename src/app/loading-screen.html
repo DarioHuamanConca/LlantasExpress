@@ -1,0 +1,33 @@
+<div class="loading-screen" *ngIf="isVisible">
+  <div class="loading-container">
+    <!-- Logo -->
+    <div class="loading-logo">
+      <div class="logo-icon">⚙️</div>
+      <div class="logo-text">LLANTAS EXPRESS</div>
+    </div>
+    
+    <!-- Animación de llanta -->
+    <div class="tire-animation">
+      <div class="tire">
+        <div class="tire-tread"></div>
+        <div class="tire-rim">
+          <div class="tire-hub"></div>
+        </div>
+      </div>
+      <div class="road"></div>
+    </div>
+    
+    <!-- Información de carga -->
+    <div class="loading-info">
+      <div class="loading-text">{{ loadingText }}</div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" [style.width]="progress + '%'">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+      
+      <div class="progress-percentage">{{ progress | number:'1.0-0' }}%</div>
+    </div>
+  </div>
+</div>

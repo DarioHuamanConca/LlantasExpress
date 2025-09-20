@@ -1,0 +1,339 @@
+// Variables
+$primary-color: #e63946;
+$secondary-color: #1d3557;
+$accent-color: #a8dadc;
+$light-color: #f1faee;
+$dark-color: #1a1a1a;
+$gray-light: #f8f9fa;
+$transition: all 0.3s ease;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: 768px) { @content; }
+  }
+}
+
+// Estilos generales
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: $secondary-color;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: $primary-color;
+    border-radius: 2px;
+  }
+  
+  @include respond-to(mobile) {
+    font-size: 2rem;
+  }
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: $transition;
+  border: 2px solid transparent;
+  cursor: pointer;
+  
+  &-primary {
+    background: $primary-color;
+    color: white;
+    
+    &:hover {
+      background: darken($primary-color, 10%);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &-secondary {
+    background: $secondary-color;
+    color: white;
+    
+    &:hover {
+      background: lighten($secondary-color, 10%);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &-light {
+    background: white;
+    color: $primary-color;
+    
+    &:hover {
+      background: $gray-light;
+      transform: translateY(-2px);
+    }
+  }
+  
+  &-outline-light {
+    background: transparent;
+    color: white;
+    border-color: white;
+    
+    &:hover {
+      background: white;
+      color: $primary-color;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Hero Section
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+              url('https://images.unsplash.com/photo-1549399542-7e82138d0d73?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+  min-height: 80vh;
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  
+  @include respond-to(mobile) {
+    min-height: 60vh;
+  }
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  
+  h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    
+    @include respond-to(mobile) {
+      font-size: 2.5rem;
+    }
+  }
+  
+  p {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+    
+    @include respond-to(mobile) {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  
+  @include respond-to(mobile) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+// Features Section
+.features {
+  padding: 5rem 0;
+  background: $gray-light;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: $transition;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: lighten($accent-color, 15%);
+  border-radius: 50%;
+  @include flex-center;
+  
+  img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+  }
+}
+
+.feature-card h3 {
+  color: $secondary-color;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.feature-card p {
+  color: #666;
+  line-height: 1.6;
+}
+
+// Brands Section
+.brands {
+  padding: 5rem 0;
+  background: white;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  align-items: center;
+}
+
+.brand-item {
+  @include flex-center;
+  height: 100px;
+  padding: 1rem;
+  background: $gray-light;
+  border-radius: 10px;
+  transition: $transition;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  img {
+    max-width: 100%;
+    max-height: 60px;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: $transition;
+  }
+  
+  &:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+}
+
+// CTA Section
+.cta {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, $primary-color, darken($primary-color, 15%));
+  color: white;
+  text-align: center;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  
+  @include respond-to(mobile) {
+    font-size: 2rem;
+  }
+}
+
+.cta-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  
+  @include respond-to(mobile) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+// Testimonials Section
+.testimonials {
+  padding: 5rem 0;
+  background: $gray-light;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.testimonial-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  
+  &::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 4rem;
+    color: $accent-color;
+    opacity: 0.2;
+    font-family: Georgia, serif;
+  }
+}
+
+.testimonial-text {
+  margin-bottom: 1.5rem;
+  
+  p {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+  }
+}
+
+.testimonial-author {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  
+  h4 {
+    color: $secondary-color;
+    margin-bottom: 0.5rem;
+  }
+  
+  p {
+    color: #777;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,88 @@
+<section class="products">
+  <div class="container">
+    <div class="page-header">
+      <h1>Nuestros Productos</h1>
+      <p>Descubre nuestra amplia gama de llantas de alta calidad para todo tipo de vehículos</p>
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label for="category-filter">Categoría:</label>
+        <select id="category-filter" (change)="filterByCategory($event)">
+          <option value="all">Todas las categorías</option>
+          <option value="auto">Autos</option>
+          <option value="suv">SUV</option>
+          <option value="camioneta">Camionetas</option>
+          <option value="deportivo">Deportivos</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="brand-filter">Marca:</label>
+        <select id="brand-filter" (change)="filterByBrand($event)">
+          <option value="all">Todas las marcas</option>
+          <option value="michelin">Michelin</option>
+          <option value="bridgestone">Bridgestone</option>
+          <option value="pirelli">Pirelli</option>
+          <option value="goodyear">Goodyear</option>
+          <option value="continental">Continental</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="sort-filter">Ordenar por:</label>
+        <select id="sort-filter" (change)="sortProducts($event)">
+          <option value="name">Nombre A-Z</option>
+          <option value="price-asc">Precio: Menor a Mayor</option>
+          <option value="price-desc">Precio: Mayor a Menor</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card" *ngFor="let product of filteredProducts">
+        <div class="product-image">
+          <img [src]="product.image" [alt]="product.name" loading="lazy">
+          <span class="product-badge" *ngIf="product.isNew">Nuevo</span>
+          <span class="product-badge discount" *ngIf="product.discount">-{{product.discount}}%</span>
+        </div>
+        
+        <div class="product-info">
+          <span class="product-brand">{{product.brand}}</span>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-description">{{ product.description }}</p>
+          
+          <div class="product-features">
+            <span class="feature" *ngFor="let feature of product.features">
+              {{feature}}
+            </span>
+          </div>
+          
+          <div class="product-price">
+            <span class="current-price">{{ product.price | currency }}</span>
+            <span class="original-price" *ngIf="product.originalPrice">
+              {{ product.originalPrice | currency }}
+            </span>
+          </div>
+          
+          <div class="product-actions">
+            <button class="btn btn-primary" (click)="addToCart(product)">
+              <span class="btn-icon">🛒</span>
+              Agregar al carrito
+            </button>
+            <button class="btn btn-outline" (click)="viewDetails(product)">
+              Ver detalles
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-products" *ngIf="filteredProducts.length === 0">
+      <img src="https://cdn-icons-png.flaticon.com/512/4076/4076398.png" alt="No products found" class="no-products-image">
+      <h3>No encontramos productos con esos filtros</h3>
+      <p>Intenta ajustar los filtros o ver todas las categorías</p>
+      <button class="btn btn-primary" (click)="resetFilters()">Mostrar todos los productos</button>
+    </div>
+  </div>
+</section>

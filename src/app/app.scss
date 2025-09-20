@@ -1,0 +1,330 @@
+// Variables
+$primary-color: #e63946;
+$secondary-color: #1d3557;
+$background-dark: #1a1a1a;
+$text-light: #f1faee;
+$accent-color: #a8dadc;
+$transition-speed: 0.3s;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: 768px) { @content; }
+  }
+}
+
+// Estilos base
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+}
+
+app-root {
+  display: block;
+  min-height: 100vh;
+}
+
+// Scrollbar personalizado
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: lighten($background-dark, 5%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary-color;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: darken($primary-color, 10%);
+}
+
+// Pantalla de carga - ESTILOS CRÍTICOS AÑADIDOS
+app-loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  @include flex-center;
+  background: #1A252F; // Color de fondo explícito
+  
+  // Forzar visibilidad cuando el componente existe
+  &:not(:empty) {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+// Contenido principal
+.content-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+  // Ocultar durante la carga
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+  }
+  
+  // Mostrar después de la carga
+  &:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+    animation: fadeInUp 0.8s ease-out;
+  }
+}
+
+// Animaciones
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Header
+.header {
+  background: $background-dark;
+  color: $text-light;
+  padding: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
+  
+  .logo-icon {
+    margin-right: 10px;
+    font-size: 1.8rem;
+  }
+  
+  .logo-text {
+    background: linear-gradient(45deg, $primary-color, $accent-color);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+  }
+}
+
+.nav {
+  display: flex;
+  gap: 25px;
+  
+  a {
+    color: $text-light;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all $transition-speed;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: $primary-color;
+      transition: all $transition-speed;
+      transform: translateX(-50%);
+    }
+    
+    &:hover {
+      color: $primary-color;
+      
+      &::after {
+        width: 80%;
+      }
+    }
+    
+    &.active {
+      color: $primary-color;
+      background: rgba(230, 57, 70, 0.1);
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+  
+  @include respond-to(mobile) {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: $background-dark;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all $transition-speed;
+    
+    &.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  
+  span {
+    width: 25px;
+    height: 3px;
+    background: $text-light;
+    margin: 3px 0;
+    transition: all $transition-speed;
+    transform-origin: left center;
+  }
+  
+  &.open {
+    span:nth-child(1) {
+      transform: rotate(45deg);
+    }
+    
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    span:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+  }
+  
+  @include respond-to(mobile) {
+    display: flex;
+  }
+}
+
+// Main content
+.main {
+  flex: 1;
+  padding: 30px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: calc(100vh - 140px);
+}
+
+// Footer
+.footer {
+  background: $background-dark;
+  color: $text-light;
+  padding: 20px 10px;
+  margin-top: auto;
+  
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    @include respond-to(mobile) {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  
+  a {
+    color: $text-light;
+    font-size: 1.2rem;
+    transition: color $transition-speed;
+    
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
+
+// Mejora: Transición suave para elementos internos
+.content-wrapper:not(.hidden) {
+  .header,
+  .main,
+  .footer {
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+  }
+  
+  .header {
+    animation-delay: 0.1s;
+  }
+  
+  .main {
+    animation-delay: 0.2s;
+  }
+  
+  .footer {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
